@@ -1,10 +1,31 @@
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-//2,6,10
-//sprawdzanie czy konkretne auto znajduje się na liście,
 public class CarService {
+
     private List<Car> carList;
+
+    public CarService(List<Car> carList) {
+        this.carList = carList;
+    }
+//1
+    public void addCarToList(Car car) {
+        carList.add(car);
+    }
+//5
+    public List<Car> productedBefore1999() {
+        return carList.stream().filter(x -> x.getDateOfProduction().isBefore(LocalDate.of(1999, 1, 1)))
+                .collect(Collectors.toList());
+    }
+//9
+    public List<Car> sortedCarsByPrice(boolean asc) {
+        if (asc) {
+            return carList.stream().sorted(Comparator.comparing(Car::getPrice)).collect(Collectors.toList());
+        } return carList.stream().sorted(Comparator.comparing(Car::getPrice).reversed()).collect(Collectors.toList());
+    }
+
 //feat 2
     public boolean deleteCar(Car car) {
         return carList.remove(car);
@@ -22,3 +43,4 @@ public class CarService {
     }
 
 }
+
